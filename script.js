@@ -113,4 +113,21 @@ function copyDiscord() {
 
 // Función de apertura y cierre de popups
 function openPopup(popupId) {
-  document.getElementById(popupId).style
+  document.getElementById(popupId).style.display = 'flex';
+}
+
+function closePopup() {
+  const popups = document.querySelectorAll('.popup');
+  popups.forEach(popup => popup.style.display = 'none');
+}
+
+// Inicialización
+updateMessage();
+showProfiles();
+
+// Event listeners
+document.getElementById('btn-login').addEventListener('click', login);
+document.getElementById('btn-register').addEventListener('click', () => openPopup('register-popup'));
+document.getElementById('register-btn').addEventListener('click', register);
+document.getElementById('create-profile-btn').addEventListener('click', createProfile);
+document.getElementById('copy-btn').addEventListener('click', copyDiscord);
