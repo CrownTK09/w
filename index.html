@@ -1,57 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crear Perfil</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Perfiles</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <button id="btn-login">Iniciar Sesión</button>
-    <button id="btn-register">Registrar</button>
-    <button id="btn-discord" onclick="window.open('https://discord.gg/yourserver', '_blank')">Discord</button>
-  </header>
+    <!-- Barra superior -->
+    <header>
+        <button id="btn-login">Iniciar Sesión</button>
+        <button id="btn-register">Registrar</button>
+        <button id="btn-discord" onclick="window.open('https://discord.com', '_blank')">Discord</button>
+    </header>
 
-  <div id="message-container">
-    <p id="message-text">Para crear perfil, inicia sesión o regístrate.</p>
-  </div>
-
-  <div id="profiles-list">
-    <!-- Aquí se mostrarán los perfiles creados -->
-  </div>
-
-  <!-- Popup de registro -->
-  <div id="register-popup" class="popup">
-    <div class="popup-content">
-      <span class="close-btn" onclick="closePopup()">X</span>
-      <input type="text" id="register-name" placeholder="Nombre" required>
-      <input type="password" id="register-password" placeholder="Contraseña" required>
-      <button id="register-btn">Registrar</button>
+    <!-- Mensaje de inicio -->
+    <div id="message">
+        <p>Para Crear Perfil, inicia sesión o regístrate</p>
     </div>
-  </div>
 
-  <!-- Popup de crear perfil -->
-  <div id="create-profile-popup" class="popup">
-    <div class="popup-content">
-      <span class="close-btn" onclick="closePopup()">X</span>
-      <input type="file" id="profile-pic">
-      <input type="text" id="username" placeholder="Nombre de usuario" required>
-      <input type="text" id="discord-name" placeholder="Nombre de Discord" required>
-      <button id="create-profile-btn">Crear Perfil</button>
-      <button id="preview-btn">Previsualizar</button>
+    <!-- Contenedor de perfiles -->
+    <div id="profiles-container"></div>
+
+    <!-- POPUP para Registro -->
+    <div class="popup" id="register-popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">X</span>
+            <h2>Registro</h2>
+            <input type="text" id="register-name" placeholder="Nombre de usuario" required>
+            <input type="password" id="register-password" placeholder="Contraseña" required>
+            <button id="register-btn">Registrar</button>
+        </div>
     </div>
-  </div>
 
-  <!-- Popup para copiar Discord -->
-  <div id="discord-popup" class="popup">
-    <div class="popup-content">
-      <span class="close-btn" onclick="closePopup()">X</span>
-      <p id="discord-text"></p>
-      <button id="copy-btn">Copiar</button>
+    <!-- POPUP para Crear Perfil -->
+    <div class="popup" id="create-profile-popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">X</span>
+            <h2>Crear Perfil</h2>
+            <input type="file" id="photo-input" accept="image/*">
+            <img id="profile-pic" src="default.jpg" alt="Foto de perfil">
+            <input type="text" id="profile-name" placeholder="Nombre de usuario" required>
+            <input type="text" id="discord-name" placeholder="Nombre de Discord" required>
+            <button id="create-profile-btn">Crear Perfil</button>
+            <button id="preview-profile-btn">Previsualizar</button>
+        </div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
