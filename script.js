@@ -1,6 +1,7 @@
 let loggedIn = false;
 let currentUser = null;
 let profiles = JSON.parse(localStorage.getItem('perfiles.json')) || [];
+let accounts = JSON.parse(localStorage.getItem('cuentas.json')) || [];
 
 // Función para mostrar los perfiles
 function showProfiles() {
@@ -37,7 +38,6 @@ function updateMessage() {
 function login() {
   const name = prompt("Ingrese su nombre de usuario:");
   const password = prompt("Ingrese su contraseña:");
-  const accounts = JSON.parse(localStorage.getItem('cuentas.json')) || [];
 
   const account = accounts.find(acc => acc.name === name && acc.password === password);
   if (account) {
@@ -61,7 +61,6 @@ function register() {
   }
 
   const newAccount = { name, password };
-  let accounts = JSON.parse(localStorage.getItem('cuentas.json')) || [];
   accounts.push(newAccount);
   localStorage.setItem('cuentas.json', JSON.stringify(accounts));
 
@@ -78,15 +77,18 @@ function createProfile() {
   const username = document.getElementById('username').value;
   const discordName = document.getElementById('discord-name').value;
 
-  if (!pic || !username || !discordName) {
+  if (!username || !discordName) {
     alert("Por favor complete todos los campos.");
     return;
   }
 
+  // Si no se selecciona una imagen, asignar una imagen por defecto
+  const picUrl = pic ? URL.createObjectURL(pic) : 'default-avatar.png';  // La imagen por defecto
+
   const profile = {
     username,
     discordName,
-    picUrl: URL.createObjectURL(pic),
+    picUrl,
     createdBy: currentUser
   };
 
@@ -111,20 +113,4 @@ function copyDiscord() {
 
 // Función de apertura y cierre de popups
 function openPopup(popupId) {
-  document.getElementById(popupId).style.display = 'flex';
-}
-
-function closePopup() {
-  const popups = document.querySelectorAll('.popup');
-  popups.forEach(popup => popup.style.display = 'none');
-}
-
-// Agregar event listeners
-document.getElementById('btn-login').addEventListener('click', login);
-document.getElementById('btn-register').addEventListener('click', () => openPopup('register-popup'));
-document.getElementById('register-btn').addEventListener('click', register);
-document.getElementById('create-profile-btn').addEventListener('click', createProfile);
-document.getElementById('copy-btn').addEventListener('click', copyDiscord);
-
-// Inicializar
-updateMessage();
+  document.getElementById(popupId).style
