@@ -50,49 +50,56 @@ function register() {
     if (username && password) {
         accounts.push({ username, password });
         localStorage.setItem('cuentas.json', JSON.stringify(accounts));
-        alert('Cuenta registrada correctamente');
+        alert('Cuenta registrada con éxito');
         closePopup('register-popup');
+        currentUser = { username };
+        showProfiles();
+        toggleLoginButtons();
     } else {
-        alert('Por favor, ingresa un nombre de usuario y contraseña');
+        alert('Por favor, ingrese un nombre de usuario y una contraseña');
     }
 }
 
-// Función de login
-document.getElementById('btn-login').addEventListener('click', () => {
-    const username = prompt('Ingresa tu nombre de usuario');
-    const password = prompt('Ingresa tu contraseña');
+// Función para cambiar entre iniciar sesión/registrar
+function toggleLoginButtons() {
+    const loginButton = document.getElementById('btn-login');
+    const registerButton = document.getElementById('btn-register');
+    const createProfileButton = document.createElement('button');
+    createProfileButton.textContent = 'Crear Perfil';
+    createProfileButton.className = 'header-btn';
+    createProfileButton.onclick = () => openPopup('create-profile-popup');
+    document.querySelector('.header-container').appendChild(createProfileButton);
+    
+    loginButton.style.display = 'none';
+    registerButton.style.display = 'none';
+    document.getElementById('login-message').textContent = 'Para Crear Perfil, pulsa en el boton "Crear Perfil"';
+}
 
-    const account = accounts.find(acc => acc.username === username && acc.password === password);
-    if (account) {
-        currentUser = account;
-        document.getElementById('btn-login').style.display = 'none';
-        document.getElementById('btn-register').style.display = 'none';
-        document.getElementById('login-message').textContent = 'Para Crear Perfil, pulsa en el boton "Crear Perfil"';
-        document.getElementById('create-profile-btn').style.display = 'block';
-    } else {
-        alert('Usuario o contraseña incorrectos');
-    }
-});
-
-// Función de creación de perfil
-document.getElementById('create-profile-btn').addEventListener('click', () => openPopup('create-profile-popup'));
-
-document.getElementById('create-profile-btn').addEventListener('click', () => {
-    const photoInput = document.getElementById('profile-photo');
-    const photo = photoInput.files[0] ? URL.createObjectURL(photoInput.files[0]) : 'default.jpg';
+// Crear perfil
+function createProfile() {
+    const photo = document.getElementById('profile-photo').files[0];
     const username = document.getElementById('profile-name').value;
     const discordName = document.getElementById('discord-name').value;
 
-    const newProfile = { username, discordName, photo };
-    profiles.push(newProfile);
-    localStorage.setItem('perfiles.json', JSON.stringify(profiles));
+    const profile = {
+        photo: photo ? URL.createObjectURL(photo) : 'default.jpg', // Si no se selecciona foto, usar la foto por defecto
+        username,
+        discordName
+    };
 
+    profiles.push(profile);
+    localStorage.setItem('perfiles.json', JSON.stringify(profiles));
     alert('Perfil creado con éxito');
     closePopup('create-profile-popup');
     showProfiles();
-});
+}
 
-// Mostrar perfiles al cargar
+document.getElementById('register-btn').onclick = register;
+document.getElementById('create-profile-btn').onclick = createProfile;
+document.getElementById('btn-login').onclick = () => alert('Funcionalidad de iniciar sesión pendiente');
+document.getElementById('btn-register').onclick = () => openPopup('register-popup');
+
+// Mostrar los perfiles al cargar la página
 window.onload = () => {
     showProfiles();
 };
